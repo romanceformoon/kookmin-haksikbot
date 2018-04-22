@@ -1,3 +1,6 @@
-# 국민학식봇
 
-crawl 페이지 호출 시 학식 크롤링 후 DB에 저장
+
+# 국민학식봇 - 카카오톡 플러스친구
+
+https://pf.kakao.com/_CBtaxl
+
