@@ -1,10 +1,12 @@
 import requests
-import json
+import os
 import datetime
 
+os.environ['TZ'] = 'Asia/Seoul'
+
 def lambda_handler(event, context):
+    os.environ['TZ'] = 'Asia/Seoul'
     if event["content"]:
-        
         now = datetime.datetime.now()
         nowDate = now.strftime('%Y-%m-%d')
         today = now.strftime('%m월 %d일')
