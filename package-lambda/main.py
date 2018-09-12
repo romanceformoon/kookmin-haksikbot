@@ -1,11 +1,9 @@
 import requests
 import os
 import datetime
-
-os.environ['TZ'] = 'Asia/Seoul'
+import json
 
 def lambda_handler(event, context):
-    os.environ['TZ'] = 'Asia/Seoul'
     if event["content"]:
         now = datetime.datetime.now()
         nowDate = now.strftime('%Y-%m-%d')
@@ -14,10 +12,17 @@ def lambda_handler(event, context):
         params = {'sdate': nowDate, 'edate': nowDate, 'today': nowDate}
         res = requests.post('http://kmucoop.kookmin.ac.kr/menu/menujson.php', data=params)
         cafe = event["content"]
-        menu = ""
         
-        for keys, values in res.json()[cafe][nowDate].items():
-            menu += keys.replace('<br>', '') + "\n" + res.json()[cafe][nowDate][keys]['메뉴'].replace('\r', '').strip() + " " + res.json()[cafe][nowDate][keys]['가격'] + "\n\n\n"
+        try:
+            menu = ""
+            for keys, values in res.json()[cafe][nowDate].items():
+                menu += keys.replace('<br>', '') + "\n" + res.json()[cafe][nowDate][keys]['메뉴'].replace('\r', '').strip() + " " + res.json()[cafe][nowDate][keys]['가격'] + "\n\n\n"
+        except:
+            menu = ""
+            data = json.loads(res.text)
+            for keys, values in data[cafe][nowDate].items():
+                menu += keys.replace('<br>', '') + "\n" + data[cafe][nowDate][keys]['메뉴'].replace('\r', '').strip() + " " + data[cafe][nowDate][keys]['가격'] + "\n\n\n"
+                
 
         final = {
                 "message":{
