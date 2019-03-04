@@ -4,6 +4,7 @@ import datetime
 import json
 
 def lambda_handler(event, context):
+    os.environ['TZ'] = 'Asia/Seoul'
     if event["content"]:
         now = datetime.datetime.now()
         nowDate = now.strftime('%Y-%m-%d')
@@ -30,7 +31,7 @@ def lambda_handler(event, context):
                 },
                 "keyboard":{
                     "type": "buttons",
-                    "buttons": ['학생식당', '교직원식당', '한울식당', '청향', '생활관식당(일반식)', '생활관식당(정기식)']
+                    "buttons": ['학생식당(복지관 1층)', '교직원식당(복지관 1층)', '한울식당(법학관 지하1층)', '청향(법학관 5층)', '생활관식당 일반식(생활관 A동 1층)', '생활관식당 정기식(생활관 A동 1층)']
                 }
             }
 
